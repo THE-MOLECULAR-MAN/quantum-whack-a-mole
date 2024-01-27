@@ -1,5 +1,6 @@
 import time
 
+
 class View:
 
     BOARD_STRING = "|------------|" \
@@ -12,60 +13,49 @@ class View:
         pass
 
     def display_initial_message(self, username):
-            self.display_board()
-            time.sleep(3)
-            print("Whacker : " + username)
-            time.sleep(3)
-            print("\nThere's a mole out there...")
-            time.sleep(3)
-            print("It exists here, there and everywhere ... at once")
-            time.sleep(3)
-            print("We bestow upon you the Quantum Hammer!!!")
-            time.sleep(3)
-            print("Use it and end the terror of the Quantum-mole!")
+        self.display_board()
+        print("\nThere's a mole out there...")
+        print("It exists here, there and everywhere ... at once")
+        print("We bestow upon you the Quantum Hammer!!!")
+        print("Use it and end the terror of the Quantum-mole!")
 
     def accept_move(self):
-        x = input("What are you going to do? Enter c for classical smash and q for quantum smash")
+        x = input(
+            "What are you going to do? Enter c for classical smash and q for quantum smash, and which gate (ex: c1 or q3): ")
         return x
 
     def final_message(self, username, win):
         if win:
-            print("Wow ...")
-            time.sleep(3)
-            print("The Quantum-Mole is really gone ...")
-            time.sleep(3)
-            print("You did it " + username)
-            print("Congratulations!!!")
-
+            print("YOU WIN!")
         else:
-            print("Alas...")
-            print("The quantum mole lives on ... it is here, there and everywhere ... at once")
+            print("YOU MISSED, YOU LOSE!")
+            print(
+                "The quantum mole lives on ... it is here, there and everywhere ... at once")
 
     def display_quantum_message(self, hint, hole):
         print("New Information!!!")
-        time.sleep(3)
         print("Probability amplitude of mole being in hole " + hole + " is ", hint)
-        time.sleep(3)
 
     def display_board(self):
         print(View.BOARD_STRING)
 
     def accept_quantum_gate(self):
         result = []
-        gate = input("What quantum gate do you wish to add to the circuit?")
+        gate = input(
+            "What quantum gate do you wish to add to the circuit [R/CX/?]: ")
         result.append(gate)
 
         if gate == 'r' or gate == 'R':
-            angle = input("Enter phase")
+            angle = input("Enter phase [?]: ")
             result.append(angle)
 
         elif gate == 'cx' or gate == 'CX':
-            control_qubit = input("Enter control qubit")
+            control_qubit = input("Enter control qubit [1-4]: ")
             result.append(control_qubit)
 
         else:
-          result.append("b")
-        target_qubit = input("Enter target qubit")
+            result.append("b")
+        target_qubit = input("Enter target qubit [1-4]: ")
         result.append(target_qubit)
 
         return result

@@ -1,4 +1,4 @@
-#imports
+# imports
 
 import qiskit
 import numpy as np
@@ -17,14 +17,17 @@ class Model:
     def __init__(self):
         # TODO initialize with more friendly state vectors?
         self.circuit = qiskit.QuantumCircuit(2, 2)
-        self.state1 = self.circuit.initialize(qiskit.quantum_info.random_statevector(2).data, 0)
-        self.state2 = self.circuit.initialize(qiskit.quantum_info.random_statevector(2).data, 1)
+        self.state1 = self.circuit.initialize(
+            qiskit.quantum_info.random_statevector(2).data, 0)
+        self.state2 = self.circuit.initialize(
+            qiskit.quantum_info.random_statevector(2).data, 1)
         self.add_circuit = qiskit.QuantumCircuit(2)
 
     # Measure qubits and return state with max probability: ex. [0,1]
     def measureState(self):
         self.circuit.measure([0, 1], [1, 0])
-        job = qiskit.execute(self.circuit, self.simulator, shots=1)  # 1 shot to keep it luck dependent?
+        # 1 shot to keep it luck dependent?
+        job = qiskit.execute(self.circuit, self.simulator, shots=1)
         result = job.result()
         count = result.get_counts()
         # max_value = max(result.values())
@@ -59,14 +62,14 @@ class Model:
         elif name == "Z" or name == "z":
             self.add_circuit.z(qubit_no)
 
-        self.circuit += self.add_circuit
+        self.circuit = self.circuit + self.add_circuit
 
     def add_r_gate(self, parameter, qubit_no):
         self.add_circuit.rz(parameter, qubit_no)
 
-        self.circuit += self.add_circuit
+        self.circuit = self.circuit + self.add_circuit
 
     def add_cnot(self, control_qubit_no, target_qubit_no):
         self.add_circuit.cx(control_qubit_no, target_qubit_no)
 
-        self.circuit += self.add_circuit
+        self.circuit = self.circuit + self.add_circuit
